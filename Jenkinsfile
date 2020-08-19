@@ -42,10 +42,10 @@ pipeline{
                             }
    
                          }
-                        emailext to: 'mahimamalik98@gmail.com'                    
+                        emailext body: 'Pipeline successful', subject: 'Pipeline successful', to: 'mahimamalik98@gmail.com'                   
                       }
                     failure {
-                        emailext to: 'mahimamalik98@gmail.com'
+                        emailext body: 'Pipeline unsuccessful', subject: 'Pipeline unsuccessful', to: 'mahimamalik98@gmail.com'
                     }
                 }
  }
