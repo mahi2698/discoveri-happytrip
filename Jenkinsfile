@@ -42,10 +42,11 @@ pipeline{
                             }
    
                          }
-                        emailext body: 'Pipeline successful', subject: 'Pipeline successful', to: 'mahimamalik98@gmail.com'                   
+                        emailext body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: Check console output at $BUILD_URL to view the results.', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'dr.ambot.test@gmail.com'                   
                       }
                     failure {
-                        emailext body: 'Pipeline unsuccessful', subject: 'Pipeline unsuccessful', to: 'mahimamalik98@gmail.com'
+                        emailext body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: Check console output at $BUILD_URL to view the results.', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'dr.ambot.test@gmail.com'                   
+
                     }
                 }
  }
