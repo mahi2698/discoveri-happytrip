@@ -27,8 +27,6 @@ pipeline{
             post {
                     always {
                         archiveArtifacts artifacts: '**/*.war', followSymlinks: false
-                        junit '**/*.xml'
-                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'C:/Program Files (x86)/Jenkins/workspace/HappyT-pipeline/target/site/jacoco', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
                     }
                 }
             
