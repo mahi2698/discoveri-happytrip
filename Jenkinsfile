@@ -12,13 +12,13 @@ pipeline{
                             parameters: [choice(name: 'codeanalysis', choices: ['Yes','No'].join('\n'), description: 'Do you want to perform code quality analysis?')]
                     echo "${env.codeanalysis}"
                     if (env.codeanalysis=='Yes'){
-                             echo "Build Project"
+                             echo "Performing code quality analysis and building the project"
                              withSonarQubeEnv('sonar') {
                                        powershell label: '', script: 'mvn package sonar:sonar'
                                      }                            
                              }
                         else{
-                            echo "Not performing code quality analysis"
+                            echo "Not performing code quality analysis, building the project"
                             powershell label: '', script: 'mvn clean package'
                         }
                 }
