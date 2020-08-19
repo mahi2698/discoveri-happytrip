@@ -16,31 +16,20 @@ pipeline{
                              withSonarQubeEnv('sonar') {
                                        powershell label: '', script: 'mvn package sonar:sonar'
                                      }                            
-                             
-                            }
+                             }
+                        else{
+                            powershell label: '', script: 'mvn clean package'
+                        }
                 }
             }
             }
-            stage('Archive'){
-                steps
-                {
-                    echo "Archive Artifact"
-                    archiveArtifacts artifacts: 'C:/Program Files (x86)/Jenkins/workspace/HappyT-pipeline/target/*.jar', followSymlinks: false
-                }
             }
-            stage('Publish JUnit'){
-                steps
-                {
-                    echo "Publish JUnit"
-                    junit 'C:/Program Files (x86)/Jenkins/workspace/HappyT-pipeline/target/surefire-reports/*.xml'
+            post {
+                    always {
+                        archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+                        junit '**/*.xml'
+                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'C:/Program Files (x86)/Jenkins/workspace/HappyT-pipeline/target/site/jacoco', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+                    }
                 }
-            }
-            stage('Publish HTML'){
-                steps
-                {
-                    echo "Publish HTML"
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'C:/Program Files (x86)/Jenkins/workspace/HappyT-pipeline/target/site/jacoco', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
-                }
-            }
+            
          }
-}
