@@ -10,7 +10,6 @@ pipeline{
                     script {
                     env.codeanalysis = input message: 'User input required', ok: 'OK!',
                             parameters: [choice(name: 'codeanalysis', choices: ['Yes','No'].join('\n'), description: 'Do you want to perform code quality analysis?')]
-                    echo "${env.codeanalysis}"
                     if (env.codeanalysis=='Yes'){
                              echo "Performing code quality analysis and building the project"
                              withSonarQubeEnv('sonar') {
@@ -27,12 +26,10 @@ pipeline{
             }
             post {
                     always {
-                        echo "Archiving artifacts"
                         archiveArtifacts artifacts: '**/*.war', followSymlinks: false
                         script {
                         env.deploy = input message: 'User input required', ok: 'OK!',
                             parameters: [choice(name: 'deploy', choices: ['Yes','No'].join('\n'), description: 'Do you want to deploy on Tomcat?')]
-                        echo "${env.codeanalysis}"
                         if (env.deploy=='Yes'){
                              echo "Deploying on Tomcat"
                              deploy adapters: [tomcat7(credentialsId: 'tomcat7', path: '', url: 'http://localhost:8081/')], contextPath: 'HappyT', onFailure: false, war: '**/*.war'
